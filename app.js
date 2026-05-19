@@ -334,8 +334,42 @@
     `;
   }
 
+  // ---------- tagline ----------
+
+  const TAGLINES = [
+    "Hey bud. How's it growing?",
+    "The growing is good.",
+    "I just wet my plants.",
+    "Lettuce turnip the beet.",
+    "Don't kale my vibe.",
+    "Peas be with you.",
+    "Thyme flies when you're having fun.",
+    "Rooting for you.",
+    "Soil good, so far.",
+    "Bean there, grown that.",
+    "Compost happens.",
+    "Romaine calm and carrot on.",
+    "Hoe, hoe, hoe.",
+    "Mulch ado about nothing.",
+    "Sage advice: water your plants.",
+    "Compost makes the garden grow fronder.",
+    "Some grow it hot.",
+    "Weeds out, vibes in.",
+    "Daisy me rollin', they hatin'",
+    "A peony for your thoughts?",
+    "What in carnation?",
+    "Old gardeners never die, they simply spade away."
+  ];
+
+  function randomizeTagline() {
+    const el = document.querySelector(".tagline");
+    if (!el) return;
+    el.textContent = TAGLINES[Math.floor(Math.random() * TAGLINES.length)];
+  }
+
   // ---------- boot ----------
 
+  randomizeTagline();
   load();
   if (cfg.SHEET_ID && cfg.REFRESH_MINUTES > 0) {
     setInterval(load, cfg.REFRESH_MINUTES * 60 * 1000);
