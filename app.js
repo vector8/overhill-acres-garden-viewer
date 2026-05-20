@@ -410,7 +410,7 @@
     "Peas be with you.",
     "Thyme flies when you're having fun.",
     "Rooting for you.",
-    "Soil good, so far.",
+    "So far, soil good.",
     "Bean there, grown that.",
     "Compost happens.",
     "Romaine calm and carrot on.",
