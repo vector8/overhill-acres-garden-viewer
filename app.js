@@ -412,7 +412,7 @@
     "Rooting for you.",
     "So far, soil good.",
     "Bean there, grown that.",
-    "Compost happens.",
+    "We've sprung a leek!",
     "Romaine calm and carrot on.",
     "Hoe, hoe, hoe.",
     "Mulch ado about nothing.",
@@ -427,7 +427,10 @@
     "Go ahead, make my hay.",
     "Cuke, I am your father.",
     "To peat, or not to peat.",
-    "I think, therefore I yam."
+    "I think, therefore I yam.",
+    "You shallot pass!",
+    "Totally radicchio, dude.",
+    "You say tomato, I say... tomato."
   ];
 
   function randomizeTagline() {
