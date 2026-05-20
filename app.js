@@ -39,8 +39,12 @@
       const plants = plantsByBed.get(bed.id) || [];
       plants.forEach((p, i) => { p.color = PLANT_PALETTE[i % PLANT_PALETTE.length]; });
 
-      renderAllocation(node.querySelector(".bed-allocation"), plants);
-      renderPlantList(node.querySelector(".plant-list"), plants);
+      if (bed.isGreenhouse) {
+        node.querySelector(".bed-allocation").remove();
+      } else {
+        renderAllocation(node.querySelector(".bed-allocation"), plants);
+      }
+      renderPlantList(node.querySelector(".plant-list"), plants, { showPercent: !bed.isGreenhouse });
 
       node.querySelector(".bed-notes").textContent = bed.notes || "";
       node.querySelector(".bed-updated").textContent =
@@ -123,7 +127,8 @@
     }
   }
 
-  function renderPlantList(list, plants) {
+  function renderPlantList(list, plants, opts = {}) {
+    const showPercent = opts.showPercent !== false;
     list.innerHTML = "";
     for (const p of plants) {
       const li = document.createElement("li");
@@ -139,7 +144,7 @@
           <span class="plant-stage">${escapeHtml(stage.label)}</span>
           <span class="plant-notes"></span>
         </div>
-        <span class="plant-percent">${p.percent}%</span>
+        ${showPercent ? `<span class="plant-percent">${p.percent}%</span>` : ""}
       `;
       li.querySelector(".plant-name").textContent = p.name;
       const notesEl = li.querySelector(".plant-notes");
