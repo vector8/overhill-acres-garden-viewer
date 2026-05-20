@@ -24,8 +24,13 @@
 
     const hasPlacement = beds.some(b => b.row != null || b.col != null);
     if (hasPlacement) {
-      const maxCol = Math.max(1, ...beds.map(b => b.col || 0));
-      const maxRow = Math.max(1, ...beds.map(b => b.row || 0));
+      const endOf = (start, span) => {
+        if (start == null) return 0;
+        if (span === "all" || span == null) return start;
+        return start + span - 1;
+      };
+      const maxCol = Math.max(1, ...beds.map(b => endOf(b.col, b.colSpan)));
+      const maxRow = Math.max(1, ...beds.map(b => endOf(b.row, b.rowSpan)));
       grid.classList.add("is-placed");
       grid.style.setProperty("--grid-cols", maxCol);
       grid.style.setProperty("--grid-rows", maxRow);
@@ -42,8 +47,8 @@
       }
 
       if (hasPlacement) {
-        if (bed.col != null) node.style.gridColumn = String(bed.col);
-        if (bed.row != null) node.style.gridRow = String(bed.row);
+        node.style.gridColumn = buildGridTrack(bed.col, bed.colSpan);
+        node.style.gridRow = buildGridTrack(bed.row, bed.rowSpan);
       }
 
       node.querySelector(".bed-name").textContent = bed.name || bed.id;
@@ -255,12 +260,35 @@
       order: orderRaw !== "" && orderRaw != null && Number.isFinite(orderNum) ? orderNum : null,
       row: parsePositiveInt(row.row),
       col: parsePositiveInt(row.col),
+      rowSpan: parseSpan(row.row_span),
+      colSpan: parseSpan(row.col_span),
     };
   }
 
   function parsePositiveInt(v) {
     const n = Number(v);
     return Number.isFinite(n) && n >= 1 ? Math.floor(n) : null;
+  }
+
+  // Returns a positive integer, the literal "all", or null.
+  function parseSpan(v) {
+    if (v == null) return null;
+    const s = String(v).trim().toLowerCase();
+    if (s === "") return null;
+    if (s === "all" || s === "full" || s === "*") return "all";
+    const n = Number(s);
+    return Number.isFinite(n) && n >= 1 ? Math.floor(n) : null;
+  }
+
+  // Build a grid-column/grid-row value from a start and span.
+  // start may be null (auto-place); span may be null (1 cell),
+  // a positive integer, or "all" (stretch to grid edge).
+  function buildGridTrack(start, span) {
+    if (start == null && span == null) return "";
+    if (span === "all") return `${start || 1} / -1`;
+    if (span != null && start != null) return `${start} / span ${span}`;
+    if (span != null) return `span ${span}`;
+    return String(start);
   }
 
   function parsePlantRow(row) {

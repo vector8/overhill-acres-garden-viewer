@@ -27,6 +27,11 @@
 //                        Mode kicks in if ANY bed has row or col set.
 //                        Unplaced beds auto-fill remaining cells.
 //                        Falls back to a single column on phones.
+//       - row_span /     optional — make a bed cover multiple cells.
+//         col_span       Use a number (e.g. col_span=2 → two cells wide)
+//                        or the word "all" to stretch across the whole
+//                        row/column. Example for a greenhouse that fills
+//                        the top row: row=1, col=1, col_span=all.
 //
 //     "Plants" columns (header row required):
 //       bed_id | name | percent | stage | notes | updated
