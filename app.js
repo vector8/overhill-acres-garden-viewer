@@ -169,6 +169,14 @@
       ]);
 
       const parsedBeds = beds.map(parseBedRow).filter(b => b.id);
+      parsedBeds.forEach((b, i) => { b._row = i; });
+      parsedBeds.sort((a, b) => {
+        const ao = a.order, bo = b.order;
+        if (ao != null && bo != null) return ao - bo;
+        if (ao != null) return -1;
+        if (bo != null) return 1;
+        return a._row - b._row;
+      });
       const parsedPlants = plants.map(parsePlantRow).filter(p => p.bedId && p.name);
 
       const plantsByBed = new Map();
@@ -221,6 +229,8 @@
   }
 
   function parseBedRow(row) {
+    const orderRaw = row.order;
+    const orderNum = Number(orderRaw);
     return {
       id: String(row.id || "").trim(),
       name: String(row.name || "").trim(),
@@ -228,6 +238,7 @@
       photos: parsePhotos(row.photos),
       notes: String(row.notes || "").trim(),
       updated: row.updated || "",
+      order: orderRaw !== "" && orderRaw != null && Number.isFinite(orderNum) ? orderNum : null,
     };
   }
 

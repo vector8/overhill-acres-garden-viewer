@@ -7,7 +7,7 @@
 //       - "Plants"
 //
 //     "Beds" columns (header row required):
-//       id | name | is_greenhouse | photos | notes | updated
+//       id | name | is_greenhouse | photos | notes | updated | order
 //       - id:            short unique id, e.g.  bed1, bed2, gh
 //       - name:          display name, e.g.  "Bed 1: Brassicas"
 //       - is_greenhouse: TRUE / FALSE  (styles the card differently)
@@ -16,6 +16,9 @@
 //                        Share each photo as "Anyone with the link".
 //       - notes:         optional short text shown at the bottom
 //       - updated:       optional date (YYYY-MM-DD) for the bed
+//       - order:         optional number — beds display low-to-high.
+//                        Beds without an order fall back to sheet
+//                        row order (and appear after numbered beds).
 //
 //     "Plants" columns (header row required):
 //       bed_id | name | percent | stage | notes | updated
