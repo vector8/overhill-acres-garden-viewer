@@ -22,6 +22,15 @@
     const grid = document.createElement("div");
     grid.className = "bed-grid";
 
+    const hasPlacement = beds.some(b => b.row != null || b.col != null);
+    if (hasPlacement) {
+      const maxCol = Math.max(1, ...beds.map(b => b.col || 0));
+      const maxRow = Math.max(1, ...beds.map(b => b.row || 0));
+      grid.classList.add("is-placed");
+      grid.style.setProperty("--grid-cols", maxCol);
+      grid.style.setProperty("--grid-rows", maxRow);
+    }
+
     const tpl = document.getElementById("bed-card-template");
 
     for (const bed of beds) {
@@ -30,6 +39,11 @@
       if (bed.isGreenhouse) {
         node.classList.add("is-greenhouse");
         node.querySelector(".bed-badge").textContent = "Greenhouse";
+      }
+
+      if (hasPlacement) {
+        if (bed.col != null) node.style.gridColumn = String(bed.col);
+        if (bed.row != null) node.style.gridRow = String(bed.row);
       }
 
       node.querySelector(".bed-name").textContent = bed.name || bed.id;
@@ -239,7 +253,14 @@
       notes: String(row.notes || "").trim(),
       updated: row.updated || "",
       order: orderRaw !== "" && orderRaw != null && Number.isFinite(orderNum) ? orderNum : null,
+      row: parsePositiveInt(row.row),
+      col: parsePositiveInt(row.col),
     };
+  }
+
+  function parsePositiveInt(v) {
+    const n = Number(v);
+    return Number.isFinite(n) && n >= 1 ? Math.floor(n) : null;
   }
 
   function parsePlantRow(row) {

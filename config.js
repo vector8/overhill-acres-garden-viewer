@@ -7,7 +7,7 @@
 //       - "Plants"
 //
 //     "Beds" columns (header row required):
-//       id | name | is_greenhouse | photos | notes | updated | order
+//       id | name | is_greenhouse | photos | notes | updated | order | row | col
 //       - id:            short unique id, e.g.  bed1, bed2, gh
 //       - name:          display name, e.g.  "Bed 1: Brassicas"
 //       - is_greenhouse: TRUE / FALSE  (styles the card differently)
@@ -19,6 +19,14 @@
 //       - order:         optional number — beds display low-to-high.
 //                        Beds without an order fall back to sheet
 //                        row order (and appear after numbered beds).
+//       - row / col:     optional 1-based grid position to lay beds
+//                        out spatially (row 1 = top, col 1 = left).
+//                        Example: a bed at row=2, col=3 sits in the
+//                        2nd row, 3rd column. Empty cells become
+//                        gaps (great for representing paths).
+//                        Mode kicks in if ANY bed has row or col set.
+//                        Unplaced beds auto-fill remaining cells.
+//                        Falls back to a single column on phones.
 //
 //     "Plants" columns (header row required):
 //       bed_id | name | percent | stage | notes | updated
