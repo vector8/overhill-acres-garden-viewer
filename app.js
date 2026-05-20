@@ -423,7 +423,11 @@
     "Daisy me rollin', they hatin'",
     "A peony for your thoughts?",
     "What in carnation?",
-    "Old gardeners never die, they simply spade away."
+    "Old gardeners never die, they simply spade away.",
+    "Go ahead, make my hay.",
+    "Cuke, I am your father.",
+    "To peat, or not to peat.",
+    "I think, therefore I yam."
   ];
 
   function randomizeTagline() {
