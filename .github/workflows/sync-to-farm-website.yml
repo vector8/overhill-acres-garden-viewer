@@ -1,0 +1,43 @@
+name: Sync to farm website
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out garden viewer (this repo)
+        uses: actions/checkout@v4
+        with:
+          path: garden-viewer
+
+      - name: Check out farm website repo
+        uses: actions/checkout@v4
+        with:
+          repository: vector8/overhill-acres-website
+          token: ${{ secrets.FARM_REPO_TOKEN }}
+          path: farm-website
+
+      - name: Sync files into farm-website/garden/
+        run: |
+          mkdir -p farm-website/garden
+          rsync -av --delete \
+            --exclude='.git' \
+            --exclude='.github' \
+            garden-viewer/ farm-website/garden/
+
+      - name: Commit and push if changed
+        run: |
+          cd farm-website
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if [[ -n "$(git status --porcelain)" ]]; then
+            git add garden/
+            git commit -m "Sync garden viewer from overhill-acres-garden-viewer"
+            git push
+          else
+            echo "No changes to sync"
+          fi
