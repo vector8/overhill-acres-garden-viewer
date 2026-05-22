@@ -10,12 +10,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out garden viewer (this repo)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           path: garden-viewer
 
       - name: Check out farm website repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: vector8/overhill-acres-website
           token: ${{ secrets.FARM_REPO_TOKEN }}
